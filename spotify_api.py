@@ -41,7 +41,7 @@ play_history = pd.read_csv('clean_play_history.csv')
 spotify_data = []
 
 for index, row in play_history.iterrows():
-    track_name = row['Track Description']
+    track_name = row['Track ``Description']
     artist_name = row['Artist Name']
     params = {
         'q': f'track:{track_name} artist:{artist_name}',
@@ -69,3 +69,10 @@ for index, row in play_history.iterrows():
         
 spotify_df = pd.DataFrame(spotify_data)
 spotify_df.to_csv('spotify_metadata.csv', index=False)
+
+artist_id = track['artists'][0]['id']
+artist_url = f'https://api.spotify.com/v1/artists/{artist_id}'
+artist_response = requests.get(artist_url, headers=headers) 
+artist_data = artist_response.json()
+
+genres = artist_data['genres']
